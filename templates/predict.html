@@ -1,0 +1,160 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+    <div class="w-50">
+        <div class="input-field col s12">
+            <div id="data" class="chips-autocomplete"></div>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center">
+    <button onclick="submitForm()" class="btn btn-success">Predict</button>
+</div>
+
+<div class="container" id="results">
+    <a class="btn btn-light rounded-pill" href="http://127.0.0.1:5000/doctor/search">find doctors</a>
+    <div>   
+        <h3>Disease</h3>
+        It seems to be you are suffering with <span class="fw-bold" id="disease"></span>
+    </div>
+    <div>
+        <h3>Description</h3>
+        <div id="description"></div>
+    </div>
+    <div>
+        <h3>Department</h3>
+        <div id="department"></div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h3>precautions</h3>
+            <div id="precautions"></div>
+        </div>
+        <div class="col">
+            <h3>medication</h3>
+            <div id="medications"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h3>Diet</h3>
+            <div id="diets"></div>
+        </div>
+        <div class="col">
+            <h3>Suggestions</h3>
+            <div id="workout"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+        
+    document.getElementById("results").style.display = "none";
+    document.addEventListener('DOMContentLoaded', async function () {
+        try {
+            var symptoms = await fetchSymptoms();
+            var elements = document.querySelectorAll('.chips-autocomplete');
+            var instances = M.Chips.init(elements, {
+                placeholder: 'Enter symptoms',
+                secondaryPlaceholder: '+Symptoms',
+                autocompleteOptions: {
+                    data: symptoms,
+                    limit: Infinity,
+                    minLength: 1
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+    async function fetchSymptoms() {
+        try {
+            const response = await fetch("http://localhost:5000/predict/symptoms");
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async function submitForm() {
+        try {
+            var elements = document.querySelector('#data');
+            var chipInstance = M.Chips.getInstance(elements);
+
+            console.log(chipInstance.chipsData);
+            const jsonData = JSON.stringify(chipInstance.chipsData);
+            console.log(jsonData);
+
+            // Make a POST request to the API with JSON data
+            const response = await fetch('http://localhost:5000/predict/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ symptoms: chipInstance.chipsData })
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const result = await response.json();
+            console.log(result);
+            document.getElementById("results").style.display = "block";
+
+            // Display the disease description
+            document.getElementById('disease').innerText = result.disease;
+            document.getElementById('description').innerText = result.description;
+            document.getElementById('department').innerText = result.department;
+
+            // Display diets
+            const dietsList = document.getElementById('diets');
+            dietsList.innerHTML = '';
+            result.diets.forEach(diet => {
+                const listItem = document.createElement('li');
+                listItem.textContent = diet;
+                dietsList.appendChild(listItem);
+            });
+
+            // Display medications
+            const medicationsList = document.getElementById('medications');
+            medicationsList.innerHTML = '';
+            result.medication.forEach(medication => {
+                const listItem = document.createElement('li');
+                listItem.textContent = medication;
+                medicationsList.appendChild(listItem);
+            });
+
+            // Display precautions
+            const precautionsList = document.getElementById('precautions');
+            precautionsList.innerHTML = '';
+            result.precaution.forEach(precaution => {
+                const listItem = document.createElement('li');
+                listItem.textContent = precaution;
+                precautionsList.appendChild(listItem);
+            });
+
+            // Display workout tips
+            const workoutList = document.getElementById('workout');
+            workoutList.innerHTML = '';
+            result.workout.forEach(workout => {
+                const listItem = document.createElement('li');
+                listItem.textContent = workout;
+                workoutList.appendChild(listItem);
+            });
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+</script>
+{% endblock %}

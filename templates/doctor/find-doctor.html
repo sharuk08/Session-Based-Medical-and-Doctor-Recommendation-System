@@ -1,0 +1,89 @@
+{% extends 'base/base.html' %}
+
+{% block styles %}
+    <style>
+        p {
+            margin: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5" style="max-width: 500px;">
+            <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Our Doctors</h5>
+            <h1 class="display-4">Qualified Healthcare Professionals</h1>
+        </div>
+       
+        <form class="row gap-3 mb-3" action="" method="post">
+            <select  name="department" id="" class="col form-select">
+                <option value="">select Department</option>
+                {% for de in depts %}
+                    <option value="{{ de }}">{{ de }}</option>
+                {% endfor %}
+            </select>
+
+            <select  name="rating" id="" class="col form-select">
+                <option value="">select rating</option>
+                <option value="1">1 and above</option>
+                <option value="2">2 and above</option>
+                <option value="3">3 and above</option>
+                <option value="4">4 and above</option>
+                <option value="5">5 and above</option>
+            </select>
+
+            <input name="fee" placeholder="Enter price less or equal" type="price" class="col form-control">
+
+            <input type="submit" value="apply filter" class="col btn btn-primary">
+        </form>
+        
+        <div class="row">
+            found {{ cnt }} doctor(s) &nbsp; &nbsp; 
+            {% if se %}
+                Search query : {{ se }} &nbsp; &nbsp; <a href="{{ url_for('doctor.search' ) }}">remove filter</a>
+            {% endif %}
+        </div>
+
+        {% for d in doctor %}    
+            <div class="row mb-2">
+                <div class="col team-item">
+                    <div class="row g-0 bg-light rounded overflow-hidden">
+                        <div class="col-12 col-sm-5 h-100">
+                            <img class="img-fluid h-100" src="{{ url_for('static', filename='img/team-1.jpg' ) }}" style="object-fit: cover;">
+                        </div>
+                        <div class="col-12 col-sm-7 h-100 d-flex flex-column">
+                            <div class="mt-auto p-4">
+                                <h3>{{ d.username }}</h3>
+                                <p class="fw-normal fst-italic text-primary mb-1">{{ d.qualification }}</p>
+
+                                <div class="d-flex gap-3">
+                                    <div>
+                                        <p><b>degree</b> : {{ d.degree }}</p>
+                                        <p><b>experience</b> : {{ d.experience }} years</p>
+                                        <p><b>contact</b> : {{ d.contact }}</p>
+                                        <p><b>email</b> : {{ d.email }}</p>
+                                    </div>
+                                    <div>
+                                        <p><b>hospital</b> : {{ d.hospital }}</p>
+                                        <p><b>rating</b> : {{ d.rating }}</p>
+                                        <p><b>Fee</b> : {{ d.fee }}</p>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <p><b>city</b> : {{ d.city }}</p>
+                                    <p><b>state</b> : {{ d.state }}</p>
+                                    <p><b>address</b> : {{ d.address }}</p>
+                                    <p><b>timings</b> : {{ d.timings }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        
+    </div>
+</div>
+{% endblock %}

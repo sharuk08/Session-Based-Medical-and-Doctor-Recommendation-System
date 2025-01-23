@@ -1,0 +1,80 @@
+<div class="container-fluid sticky-top bg-white shadow-sm">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
+            <a href="{{ url_for('main.index') }}" class="navbar-brand">
+                <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-clinic-medical me-2"></i>HealthView</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                    <a 
+                        href="{{ url_for('main.index') }}" 
+                        class="{% if request.path == '/' %} active {% endif %} nav-item nav-link ">
+                        Home
+                    </a>
+
+                    <a 
+                        href="{{ url_for('main.about') }}"
+                        class="{% if request.path == '/about' %} active {% endif %} nav-item nav-link">
+                        About
+                    </a>
+
+                    {% if not session['current_user'] %}
+                        <div class="nav-item dropdown">
+                            <a 
+                                href="#" 
+                                class="{% if request.path.startswith('/doctor') %} active {% endif %} nav-link dropdown-toggle" 
+                                data-bs-toggle="dropdown">Doctor</a>
+                            <div class="dropdown-menu m-0">
+                                <a 
+                                    href="{{ url_for('doctor.register') }}" 
+                                    class="{% if request.path.endswith('doctor/register') %} active {% endif %} dropdown-item">
+                                    Doctor Register</a>
+
+                                <a 
+                                    href="{{ url_for('doctor.login') }}" 
+                                    class="{% if request.path.endswith('doctor/login') %} active {% endif %} dropdown-item">
+                                    Doctor login</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a 
+                                href="#"
+                                class="{% if request.path == '/login' or  request.path == '/register' %} active {% endif %} nav-link dropdown-toggle" 
+                                data-bs-toggle="dropdown">Patient</a>
+                            <div class="dropdown-menu m-0">
+                                <a 
+                                    class="{% if request.path == '/register' %} active {% endif %} dropdown-item"
+                                    href="{{ url_for('auth.register') }}">
+                                    Register</a>
+
+                                <a 
+                                    class="{% if request.path == '/login' %} active {% endif %} dropdown-item"
+                                    href="{{ url_for('auth.login') }}" class="dropdown-item">
+                                    login</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a 
+                            href="{{ url_for('main.predict') }}"
+                            class="{% if request.path == '/predict' %} active {% endif %} nav-item nav-link">
+                            Predict
+                        </a>
+
+                        <a class="nav-item nav-link" href="{{ url_for('main.profile') }}">{{ session['current_user']['username'] }}</a>
+                        <a class="nav-item nav-link" href="{{ url_for('auth.logout') }}">logout</a>
+                    {% endif %}
+
+                    <a 
+                        href="{{ url_for('main.contact') }}"
+                        class="{% if request.path == '/contact' %} active {% endif %} nav-item nav-link">
+                        contact
+                    </a>
+
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container-fluid bg-primary my-5 py-5">
+    <div class="container py-5">
+        <div class="row gx-5 align-items-center">
+            <!-- Left Column (Appointment Text) -->
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="mb-4">
+                    <h5 class="d-inline-block text-white text-uppercase border-bottom border-5">Disease Predication</h5>
+                    <h1 class="display-4 text-white">Predict, Prevent, and Progress with Precision!</h1>
+                </div>
+                <p class="text-white mb-5">HealthView is your go-to health companion. Enter your symptoms to get possible disease predictions, along with advice on diet, precautions, and care. Our platform also helps you find the right doctors near you, making healthcare simple and accessible. With HealthView, taking charge of your health has never been easier.</p>
+                <a id="predict" class="btn btn-dark rounded-pill py-3 px-5 me-3" href="{{ url_for('main.predict' ) }}">Predict</a>
+            </div>
+
+            <!-- Right Column (Image) -->
+            <div class="col-lg-6">
+                <img src="{{ url_for('static', filename='img/pre.jpeg') }}" alt="" style="width:675px ;border-radius:10px ; height: 500px; display: block; margin: 0 auto;">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

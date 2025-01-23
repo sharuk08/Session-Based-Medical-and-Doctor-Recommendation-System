@@ -1,0 +1,28 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <div class="container">
+        <h1 class="display-4 text-center">User Details</h1>
+        <div class="row gx-5">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <h5 class="text-primary">Personal Information</h5>
+                <p><strong>Full Name:</strong> {{ session['current_user']['username'] }}</p>
+                <p><strong>Age:</strong> {{ session['current_user']['age'] }}</p>
+                <p><strong>Email:</strong> {{ session['current_user']['email'] }}</p>
+                <p><strong>Gender:</strong> {{ session['current_user']['gender'] }}</p>
+            </div>
+
+            <div class="col-lg-6">
+                <h5 class="text-primary">Professional Information</h5>
+                <p><strong>Specialization:</strong> {{ session['current_user']['qualification'] }} </p>
+                <p><strong>Experience (years):</strong> {{ session['current_user']['experience'] }} </p>
+                <p><strong>Degrees:</strong> {{ session['current_user']['degree'] }} </p>
+                <p><strong>Hospital:</strong> {{ session['current_user']['hospital'] }} </p>
+                <p><strong>Consultation Fee (INR):</strong> {{ session['current_user']['fee'] }} </p>
+            </div>
+        </div>
+        <a href="/" class="btn btn-primary">Go To Home</a>
+    </div>
+</div>
+{% endblock %}

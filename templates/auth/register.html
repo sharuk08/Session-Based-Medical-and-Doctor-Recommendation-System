@@ -1,0 +1,90 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="row gx-5">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="mb-4">
+                        <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Register</h5>
+                        <h1 class="display-4">Register to access our services</h1>
+                    </div>
+                    <p class="mb-5">The Register page enables new users to create an account on the platform. Users will need to provide basic information such as their name, email, phone number, and a secure password.</p>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="bg-light text-center rounded p-5">
+                        <h1 class="mb-4">Register</h1>
+                        <form method="post">
+                            <div class="row g-3">
+
+                                <div class="col-12">
+                                    {% include 'includes/alerts.html' %}
+                                </div>
+
+                                <div class="col-12">
+                                    <input 
+                                        name="username"
+                                        type="text" 
+                                        class="form-control bg-white border-0" 
+                                        placeholder="Your Full Name"
+                                         style="height: 55px;"
+                                         required
+                                        />
+                                </div>
+
+                                <div class="col-12">
+                                    <input 
+                                        name="age"
+                                        type="number" 
+                                        class="form-control bg-white border-0" 
+                                        placeholder="Age" 
+                                        style="height: 55px;"
+                                        required 
+                                        min="0" max="150">
+                                </div>
+
+                                <div class="col-12">
+                                    <select id="gender" name="gender" class="form-control bg-white border-0" style="height: 55px;"
+                                    required>
+                                        <option value="" disabled selected>Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="prefer_not_to_say">Prefer not to say</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12">
+                                    <input 
+                                        name="email"
+                                        type="email" 
+                                        class="form-control bg-white border-0" 
+                                        placeholder="Your Email" 
+                                        style="height: 55px;"
+                                        required
+                                    />
+                                </div>
+                                <div class="col-12">
+                                    <input 
+                                        name="password"
+                                        type="password" 
+                                        class="form-control bg-white border-0" 
+                                        placeholder="Your password" 
+                                        style="height: 55px;"
+                                        required
+                                    />
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Sign Up</button>
+                                </div>
+                                <p class="text-center">
+                                    Already have an account? <a class="btn btn-outline-primary" href="/login">login</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

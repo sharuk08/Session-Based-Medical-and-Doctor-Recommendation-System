@@ -1,0 +1,182 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="row gx-5">
+            <div class="col-lg-5 mb-5 mb-lg-0">
+                <div class="mb-4">
+                    <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Doctor Register</h5>
+                    <h1 class="display-4">Register to add-on to our services</h1>
+                </div>
+                <p class="mb-5">The Register page allows users to sign up by providing essential details such as their name, age, gender, specialization, experience, degrees, address, city, state, hospital affiliation, consultation fee, and email. This information helps create a personalized profile for accessing services on the platform.</p>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="bg-light text-center rounded p-5">
+                    <h1 class="mb-4">Doctor Register</h1>
+                    <form action="#" method="POST">
+                        <div class="row g-3">
+
+                            <!-- Full Name -->
+                            <div class="col-12 col-sm-6">
+                                <input 
+                                    type="text" 
+                                    name="username"
+                                    class="form-control bg-white border-0" 
+                                    placeholder="Your Full Name" 
+                                    style="height: 55px" 
+                                    required
+                                />
+                            </div>
+
+                            <!-- Age -->
+                            <div class="col-12 col-sm-6">
+                                <input 
+                                    type="number" 
+                                    name="age"
+                                    class="form-control bg-white border-0" 
+                                    placeholder="Age" 
+                                    style="height: 55px;" 
+                                    min="0" max="150" 
+                                    required 
+                                />
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-12 col-sm-6">
+                                <input 
+                                    type="email" 
+                                    name="email"
+                                    class="form-control bg-white border-0" 
+                                    placeholder="Your Email"
+                                    style="height: 55px;" 
+                                    required
+                                />
+                            </div>
+
+                            <!-- Password -->
+                            <div class="col-12 col-sm-6">
+                                <input 
+                                    type="password" 
+                                    name="password" 
+                                    class="form-control bg-white border-0" 
+                                    placeholder="Your password"
+                                    style="height: 55px;" 
+                                    required
+                                />
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="col-12 col-sm-6">
+                                <select id="gender" name="gender" class="form-select bg-white border-0" style="height: 55px;" required>
+                                    <option value="" disabled selected>Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="prefer_not_to_say">Prefer not to say</option>
+                                </select>
+                            </div>
+
+                            <!-- Specialization -->
+                            <div class="col-12 col-sm-6">
+                                <select style="height: 55px;"  name="qualification" id="" class="bg-white border-0 form-select">
+                                    <option value="">select Department</option>
+                                    {% for de in depts %}
+                                        <option value="{{ de }}">{{ de }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Experience (years) -->
+                            <div class="col-12 col-sm-6">
+                                <input 
+                                    type="number" 
+                                    name="experience"
+                                    class="form-control bg-white border-0" 
+                                    placeholder="Experience (years) " 
+                                    style="height: 55px;" 
+                                    min="0" 
+                                    required
+                                />
+                            </div>
+
+                            <!-- Degrees -->
+                            <div class="col-12 col-sm-6">
+                                <input 
+                                    type="text" 
+                                    name="degree"
+                                    class="form-control bg-white border-0" 
+                                    placeholder="Degrees" 
+                                    style="height: 55px;" 
+                                    required
+                                />
+                            </div>
+
+                            <!-- Hospital -->
+                            <div class="col-12 col-sm-6">
+                                <input 
+                                    type="text" 
+                                    name="hospital"
+                                    class="form-control bg-white border-0" 
+                                    placeholder="Hospital" 
+                                    style="height: 55px;" 
+                                    required
+                                />
+                            </div>
+
+                            <!-- Consultation Fee (INR) -->
+                            <div class="col-12 col-sm-6">
+                                <input 
+                                    type="number" 
+                                    name="fee"
+                                    class="form-control bg-white border-0" 
+                                    placeholder="Consultation Fee (INR)"
+                                    style="height: 55px;" min="0" required>
+                            </div>
+
+                            <!-- City -->
+                            <div class="col-12 col-sm-6">
+                                <input 
+                                    type="text" 
+                                    name="city"
+                                    class="form-control bg-white border-0" 
+                                    placeholder="City" 
+                                    style="height: 55px;" 
+                                    required
+                                />
+                            </div>
+
+                            <!-- State -->
+                            <div class="col-12 col-sm-6">
+                                <input 
+                                    type="text"
+                                    name="state" 
+                                    class="form-control bg-white border-0" 
+                                    placeholder="State" 
+                                    style="height: 55px;" 
+                                    required
+                                />
+                            </div>
+
+                            <!-- Address -->
+                            <div class="col-12">
+                                <textarea class="form-control bg-white border-0" placeholder="Address" style="height: 100px;" required></textarea>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" type="submit">Sign Up</button>
+                            </div>
+
+                            <!-- Login Link -->
+                            <p class="text-center">
+                                Already have an account? <a class="btn btn-outline-primary" href="{{ url_for('doctor.login') }}">login</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
