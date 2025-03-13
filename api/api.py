@@ -1,4 +1,5 @@
 from .utils.predict import get_predicted_value, symptom_dict
+from .utils.disease_predict import classify_using_bytes
 from flask_restx import Api, reqparse, Resource, Namespace
 from werkzeug.datastructures import FileStorage
 from flask import request
@@ -37,7 +38,25 @@ disease_args.add_argument(name="file", type=FileStorage, location="files", requi
 predict_args = reqparse.RequestParser()
 predict_args.add_argument(name="symptoms", type=str, location="json", required=True)
 
+disease_predict_args = reqparse.RequestParse()
+disease_predict_args.add_argument(name="file", type=FileStorage, location="files", required=True)
+disease_predict_args.add_argument(
+    name="disease_type", 
+    type=str, 
+    location="form",
+    help="select the type of disease which you want to use for classification",
+    required=True, 
+    choices=[
+        "skin_disease", 
+        "oral_disease", 
+        "lung_disease",
+        "bone_class",
+        "brain_tumor"
+    ]
+)
+
 predict_namespace = Namespace(name="predict controller", path="/predict")
+disease_namespace = Namespace(name="Disease controller", path="/disease")
 
 @predict_namespace.route("/symptoms")
 class Symptoms(Resource):
@@ -61,9 +80,23 @@ class Predict(Resource):
         queries = list()
         for s in symptoms:
             queries.append(s['tag'])
+            
+        if len(queries) <= 3:
+            return {
+                "error" : "please select more than 4 symptoms for better result"
+            }
 
         return get_predicted_value(queries)
     
+@disease_namespace.route("/")
+class DiseaseResource(Resource):
+    @disease_namespace.expect(disease_predict_args)
+    def post(self):
+        file_bytes = disease_predict_args.parse_args()['file'].read()
+        disease_type = disease_predict_args.parse_args()['disease_type'].read()
+        
+        return classify_using_bytes(file_bytes, disease_type, 224)
+
 
 api.add_namespace(predict_namespace)
 
