@@ -1,5 +1,13 @@
 {% extends 'base/base.html' %}
 
+{% block styles %}
+    <style>
+        #errorMsg {
+            color : red;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
 <div class="d-flex justify-content-center">
     <div class="w-50">
@@ -11,6 +19,8 @@
 <div class="d-flex justify-content-center">
     <button onclick="submitForm()" class="btn btn-success">Predict</button>
 </div>
+
+<h4 id="errorMsg"></h4>
 
 <div class="container" id="results">
     <a class="btn btn-light rounded-pill" href="http://127.0.0.1:5000/doctor/search">find doctors</a>
@@ -55,6 +65,8 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
         
+    let error = document.getElementById("errorMsg");
+    error.innerText = "";
     document.getElementById("results").style.display = "none";
     document.addEventListener('DOMContentLoaded', async function () {
         try {
@@ -108,6 +120,13 @@
 
             const result = await response.json();
             console.log(result);
+
+            if(result.error) {
+                console.log(result.error);
+                error.innerText = result.error;
+                return ;
+            }
+
             document.getElementById("results").style.display = "block";
 
             // Display the disease description

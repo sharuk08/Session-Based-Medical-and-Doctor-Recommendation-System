@@ -80,6 +80,11 @@ class Predict(Resource):
         queries = list()
         for s in symptoms:
             queries.append(s['tag'])
+            
+        if len(queries) <= 3:
+            return {
+                "error" : "please select more than 4 symptoms for better result"
+            }
 
         return get_predicted_value(queries)
     
