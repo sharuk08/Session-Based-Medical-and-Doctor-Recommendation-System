@@ -21,6 +21,10 @@ def contact():
 def predict():
     return render_template("predict.html")
 
+@main.route("/disease")
+def disease():
+    return render_template("disease.html")
+
 @main.route("/profile")
 def profile():
     if not session.get('current_user'):

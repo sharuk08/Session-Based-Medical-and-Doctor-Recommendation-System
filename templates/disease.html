@@ -1,0 +1,158 @@
+{% extends 'base/base.html' %}
+
+{% block title %} Multiple Disease Prediction {% endblock %}
+
+{% block styles %}
+<style>
+    input[type="file"]::file-selector-button {
+        background-color: #13C5DD;
+        color: white;        
+        border: 2px solid #13C5DD;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        height: 125%;
+        cursor: pointer;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+        background-color: #13c6dd96;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="mt-5">
+    <div class="container">
+        <div class="bg-light text-center rounded p-5">
+            <h1 class="mb-4">Multiple Disease Prediction</h1>
+            <form action="#" id="form" method="POST">
+                <div class="row g-3">
+
+
+                    <!-- Gender -->
+                    <div class="col-12">
+                        <select id="gender" name="disease_type" class="form-select bg-white border-0" style="height: 55px;"
+                            required>
+                            <option value="" disabled selected>Disease Type</option>
+                            <option value="brain_tumor">Brain Tumor</option>
+                            <option value="bone_class">Bone Class</option>
+                            <option value="lung_disease">Lung Disease</option>
+                            <option value="oral_disease">Oral Disease</option>
+                            <option value="skin_disease">Skin Disease</option>
+                        </select>
+                    </div>
+
+
+                    <!-- Experience (years) -->
+                    <div class="col-12">
+                        <input id="imageField" type="file" name="file" class="form-control bg-white border-0"
+                            placeholder="Experience (years) " style="height: 55px;" min="0" required />
+                    </div>
+
+                    <img id="image" src="" alt="">
+                    
+                    <div id="submitBtn" class="col-12">
+                        <button class="btn btn-primary w-100 py-3" type="submit">Predict</button>
+                    </div>
+                    
+                    <button id="loader" class="btn btn-primary w-100 py-3" type="button" disabled>
+                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                        <span role="status">Predicting...</span>
+                    </button>
+
+                    
+                </div>
+            </form>
+        </div>
+        <div id="result" >
+            <h1>Result : </h1>
+            <h4>Predict Class : <span id="class">XYZ</span></h4>
+            <h4>Predict Accuracy : <span id="score">99.99%</span></h4>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let form = document.getElementById("form");
+    let image = document.getElementById("image");
+    let loader = document.getElementById("loader");
+    let result = document.getElementById("result");    
+    let className = document.getElementById("class");
+    let score = document.getElementById("score");
+    let imageInput = document.getElementById("imageField");
+
+    loader.style.display='none';
+    submitBtn.style.display='none';
+    result.style.display = 'none';
+
+    function renderImage() {
+        let render = new FileReader();
+        render.readAsDataURL(imageInput.files[0]);
+
+        console.log(imageInput.files[0]);
+
+        render.onload = () => {
+            image.setAttribute('src', render.result);
+        };
+    }
+
+    function renderResult(data) {
+        console.log("Rendering result:", data); // Debug log
+        result.style.display = 'block';
+        className.innerText = data['class'];
+        score.innerText = data['score'];
+    }
+
+    imageInput.addEventListener('change', () => {
+        renderImage();
+        submitBtn.style.display = 'block';
+        result.style.display = 'none';
+    });
+
+    function predictImage() {
+        formData = new FormData(form);
+
+        // Comment out the real API call for now
+        /*
+        fetch('/predict-image', {
+            method: 'POST',
+            body: formData,
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            loader.style.display = 'none';
+            renderResult(data);
+        })
+        .catch((error) => {
+            console.log(error);
+            loader.style.display = 'none';
+            alert('Error occurred during prediction');
+        });
+        */
+
+        // Mock data for testing with 2 second delay
+        setTimeout(() => {
+            loader.style.display = 'none';
+            renderResult({
+                "class": "Test Disease",
+                "score": "95.5%"
+            });
+        }, 2000);  // 2000 milliseconds = 2 seconds
+    }
+
+    form.onsubmit = function(e) {
+        loader.style.display = 'block';
+        submitBtn.style.display = 'none';
+
+        e.preventDefault();
+
+        predictImage();
+    }
+</script>
+{% endblock %}
