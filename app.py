@@ -10,9 +10,9 @@ app = Flask(__name__)
 
 app.config.from_prefixed_env()
 
-# app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///db.sqlite3"
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
-# app.config['SECRET_KEY']="this-is-secret"
+app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///db.sqlite3"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
+app.config['SECRET_KEY']="this-is-secret"
 
 
 db.init_app(app)

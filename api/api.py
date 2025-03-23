@@ -5,7 +5,7 @@ from flask import request
 import pandas as pd
 import warnings
 
-data = pd.read_csv(r"api\data\Doctors.csv")
+data = pd.read_csv("api/data/Doctors.csv")
 warnings.filterwarnings("ignore")
 
 api = Api(
@@ -20,15 +20,15 @@ api = Api(
 
 
 def specialization_filter(Specialization):
-    data = pd.read_csv(r"api\data\Doctors.csv")
+    data = pd.read_csv("api/data/Doctors.csv")
     return (data['Specialization'] == Specialization)
 
 def city_filter(city):
-    data = pd.read_csv(r"api\data\Doctors.csv")
+    data = pd.read_csv("api/data/Doctors.csv")
     return (data['City'] == city)
 
 def state_filter(state):
-    data = pd.read_csv(r"api\data\Doctors.csv")
+    data = pd.read_csv("api/data/Doctors.csv")
     return (data['State'] == state)
 
 disease_args = reqparse.RequestParser()
