@@ -52,14 +52,18 @@ def get_info(disease):
 def get_predicted_value(patient_symptoms):
     input_vector = np.zeros(len(symptom_dict))
 
+    if len(patient_symptoms) <= 4:
+        return {
+            "error" : "please select more than four symptoms for correct predicction"
+        }    
     for item in patient_symptoms:
         input_vector[symptom_dict[item]] = 1
 
     disease = diseases_list[str(model.predict([input_vector])[0])]
-    print("\n", disease)
+    # print("\n", disease)
 
     result = get_info(disease)
-    print(result)
+    # print(result)
     return result
 
 def remove_nan(data):
