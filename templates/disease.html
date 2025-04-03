@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 
-{% block title %} Multiple Disease Prediction {% endblock %}
+{% block title %} Multiple Disease Prediction {% endblock title %}
 
 {% block styles %}
 <style>
@@ -117,9 +117,7 @@
     function predictImage() {
         formData = new FormData(form);
 
-        // Comment out the real API call for now
-        /*
-        fetch('/predict-image', {
+        fetch('/disease/', {
             method: 'POST',
             body: formData,
         })
@@ -134,16 +132,15 @@
             loader.style.display = 'none';
             alert('Error occurred during prediction');
         });
-        */
 
         // Mock data for testing with 2 second delay
-        setTimeout(() => {
-            loader.style.display = 'none';
-            renderResult({
-                "class": "Test Disease",
-                "score": "95.5%"
-            });
-        }, 2000);  // 2000 milliseconds = 2 seconds
+        // setTimeout(() => {
+        //     loader.style.display = 'none';
+        //     renderResult({
+        //         "class": "Test Disease",
+        //         "score": "95.5%"
+        //     });
+        // }, 2000);  // 2000 milliseconds = 2 seconds
     }
 
     form.onsubmit = function(e) {

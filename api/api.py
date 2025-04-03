@@ -38,7 +38,7 @@ disease_args.add_argument(name="file", type=FileStorage, location="files", requi
 predict_args = reqparse.RequestParser()
 predict_args.add_argument(name="symptoms", type=str, location="json", required=True)
 
-disease_predict_args = reqparse.RequestParse()
+disease_predict_args = reqparse.RequestParser()
 disease_predict_args.add_argument(name="file", type=FileStorage, location="files", required=True)
 disease_predict_args.add_argument(
     name="disease_type", 
@@ -93,11 +93,10 @@ class DiseaseResource(Resource):
     @disease_namespace.expect(disease_predict_args)
     def post(self):
         file_bytes = disease_predict_args.parse_args()['file'].read()
-        disease_type = disease_predict_args.parse_args()['disease_type'].read()
-        
+        disease_type = disease_predict_args.parse_args()['disease_type']
+         
         return classify_using_bytes(file_bytes, disease_type, 224)
 
 
 api.add_namespace(predict_namespace)
-
-
+api.add_namespace(disease_namespace)

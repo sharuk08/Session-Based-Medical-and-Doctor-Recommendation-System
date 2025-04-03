@@ -1,5 +1,7 @@
 {% extends 'base/base.html' %}
 
+{% block title %} Home {% endblock title %}
+
 {% block content %}
 <div class="container-fluid bg-primary my-5 py-5">
     <div class="container py-5">
@@ -11,7 +13,8 @@
                     <h1 class="display-4 text-white">Predict, Prevent, and Progress with Precision!</h1>
                 </div>
                 <p class="text-white mb-5">HealthView is your go-to health companion. Enter your symptoms to get possible disease predictions, along with advice on diet, precautions, and care. Our platform also helps you find the right doctors near you, making healthcare simple and accessible. With HealthView, taking charge of your health has never been easier.</p>
-                <a id="predict" class="btn btn-dark rounded-pill py-3 px-5 me-3" href="{{ url_for('main.predict' ) }}">Predict</a>
+                <a id="predict" class="btn btn-dark rounded-pill py-3 px-5 me-3" href="{{ url_for('main.predict' ) }}">Predict Using symptoms</a>
+                <a id="predict" class="btn btn-dark rounded-pill py-3 px-5 me-3" href="{{ url_for('main.disease' ) }}">Predict Using Image</a>
             </div>
 
             <!-- Right Column (Image) -->

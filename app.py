@@ -4,7 +4,7 @@ from apps.main import main
 from apps.doctor import doctor
 from extensions import db, cors
 
-# from api.api import api
+from api.api import api
 
 app = Flask(__name__)
 
@@ -22,4 +22,4 @@ app.register_blueprint(auth)
 app.register_blueprint(main)
 app.register_blueprint(doctor, url_prefix="/doctor")
 
-# api.init_app(app)
+api.init_app(app)
